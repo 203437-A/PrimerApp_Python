@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #Componentes agregados
     'primerComponente',
     'Login',
+    #'registro',
 
     #Librerias agregadas al proyecto
     'rest_framework',
@@ -65,6 +66,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'primerApp.urls'
+
+#CSRF_COOKIE_SECURE=True
+
 
 TEMPLATES = [
     {
