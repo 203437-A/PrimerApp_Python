@@ -33,13 +33,6 @@ class PrimerViewDetail(APIView):
         except PrimerModelo.DoesNotExist:
             return 404
 
-    def delete_object(self, pk):
-        try:
-            delete= PrimerModelo.objects.get(pk=pk)
-            delete.delete()
-        except:
-            return 404
-
     def get(self, request, pk, format=None):
         idResponse = self.get_object(pk)
 
@@ -62,8 +55,10 @@ class PrimerViewDetail(APIView):
             return Response('No encontrado', status=status.HTTP_400_BAD_REQUEST)
 
     def delete (self, request, pk, format=None):
-        idResponse = self.delete_object(pk)
+        idResponse = self.get_object(pk)
+        
         if idResponse !=404:
+            idResponse.delete()
             serializer = PrimerTablaSerializer(idResponse, data= request.data , context={'request': request})
             if serializer.is_valid():
                 serializer.save()
