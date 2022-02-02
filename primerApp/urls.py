@@ -38,7 +38,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     re_path(r'^api/v1/login/', include('Login.urls')),
-    # re_path(r'^api/v1/registro/', include('registro.urls')),
+    re_path(r'^api/v1/register/', include('register.urls')),
     re_path(r'^api/v1/primer_componente/', include('primerComponente.urls')), 
 ]
 

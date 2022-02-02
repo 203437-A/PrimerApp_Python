@@ -37,7 +37,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-i9zb-ltl7#4!=@a+_+!(*46f1e696f8ea&x$^ro&su3$p4%@m3'
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -60,7 +59,7 @@ INSTALLED_APPS = [
     #Componentes agregados
     'primerComponente',
     'Login',
-    #'registro',
+    'register',
 
     #Librerias agregadas al proyecto
     'rest_framework',
