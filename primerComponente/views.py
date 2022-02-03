@@ -1,5 +1,6 @@
-from ast import Delete
-from os import stat
+
+import json
+
 from django.template import context
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,10 +12,16 @@ from primerComponente.models import PrimerModelo
 #Importacion de serializadores
 from primerComponente.serializers import PrimerTablaSerializer
 
-#Variable global
-# import json
-# response =  '{ "success":"Ok"}'
-# response = json.loads(response)
+
+def response_custom(serializer,info,status):
+    if serializer== True:
+        responseOk= {"messages":"Success","pay_load":info ,"status":status}
+        #responseOk= json.loads(responseOk)
+        return responseOk
+    else:
+        responseError= {"messages":"Error","pay_load":info ,"status":status}
+        #responseError= json.loads(responseError)
+        return responseError
 
 
 class PrimerViewList(APIView):
@@ -22,15 +29,18 @@ class PrimerViewList(APIView):
     def get(self, request, format=None):
         querySet = PrimerModelo.objects.all()
         serializer=PrimerTablaSerializer(querySet,many=True ,context={'request':request})
-        return Response(serializer.data)
+        serializerValid=True
+        return Response(response_custom(serializerValid, serializer.data, status=status.HTTP_200_OK))
 
     def post(self, request, format=None):
         serializer= PrimerTablaSerializer(data=request.data, context={'request': request})
         if serializer.is_valid(): 
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            serializerValid=True
+            return Response(response_custom(serializerValid,serializer.data, status=status.HTTP_201_CREATED))
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializerValid=False
+            return Response(response_custom(serializerValid, serializer.errors, status=status.HTTP_400_BAD_REQUEST))
 
 class PrimerViewDetail(APIView):
     def get_object(self, pk):
@@ -44,9 +54,11 @@ class PrimerViewDetail(APIView):
 
         if idResponse != 404:
             serializer = PrimerTablaSerializer(idResponse, context= {'request': request})
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            serializerValid=True
+            return Response(response_custom(serializerValid,serializer.data, status=status.HTTP_200_OK))
         else:
-            return Response('No encontrado', status=status.HTTP_400_BAD_REQUEST)
+            serializerValid=False
+            return Response(response_custom(serializerValid,'id no encontrado', status=status.HTTP_400_BAD_REQUEST))
 
     def put (self, request, pk, format=None):
         idResponse = self.get_object(pk)
@@ -54,11 +66,14 @@ class PrimerViewDetail(APIView):
             serializer = PrimerTablaSerializer(idResponse, data= request.data , context={'request': request})
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                serializerValid=True
+                return Response(response_custom(serializerValid,serializer.data, status=status.HTTP_200_OK))
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                serializerValid=False
+                return Response(response_custom(serializerValid,serializer.errors, status=status.HTTP_400_BAD_REQUEST))
         else:
-            return Response('No encontrado', status=status.HTTP_400_BAD_REQUEST)
+            serializerValid=False
+            return Response(response_custom(serializerValid,"id no encontrado", status=status.HTTP_400_BAD_REQUEST))
 
     def delete (self, request, pk, format=None):
         idResponse = self.get_object(pk)
@@ -67,8 +82,11 @@ class PrimerViewDetail(APIView):
             serializer = PrimerTablaSerializer(idResponse, data= request.data , context={'request': request})
             if serializer.is_valid():
                 idResponse.delete()     
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                serializerValid = True
+                return Response(response_custom(serializerValid, serializer.data, status=status.HTTP_200_OK))
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                serializerValid=False
+                return Response(response_custom(serializerValid,serializer.errors, status=status.HTTP_400_BAD_REQUEST))
         else:
-            return Response('No encontrado', status=status.HTTP_400_BAD_REQUEST)
+            serializerValid=False
+            return Response(response_custom(serializerValid,"id no encontrado", status=status.HTTP_400_BAD_REQUEST))
