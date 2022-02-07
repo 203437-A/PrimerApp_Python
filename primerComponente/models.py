@@ -1,5 +1,4 @@
 from email.policy import default
-from re import T
 from django.utils import timezone
 from django.db import models
 

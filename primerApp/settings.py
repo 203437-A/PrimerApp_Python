@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'primerComponente',
     'Login',
     'register',
+    'loadImage',
 
     #Librerias agregadas al proyecto
     'rest_framework',
@@ -161,4 +162,12 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
+MEDIA_URL='/assets/'
+MEDIA_ROOT= os.path.join(BASE_DIR,'assets')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# try:
+#     from primerApp.local_settings import *
+# except ImportError :
+#     pass
