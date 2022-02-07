@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class ImageModel(models.Model):
     name_img=  models.ImageField(blank="", default="", upload_to="img/")
-    url_image= models.CharField(max_length=100)
+    url_img= models.CharField(max_length=100)
     format_img= models.CharField(max_length=100) 
     created= models.DateTimeField(default=timezone.now)
     edited= models.DateTimeField(blank=True, null=True, default=None)

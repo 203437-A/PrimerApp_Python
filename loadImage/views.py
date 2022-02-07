@@ -59,7 +59,7 @@ class ImageViewDetail(APIView):
           print('Error')
         
         idResponse.name_img=(request.data['name_img'])
-        idResponse.url_image='http://localhost:8000/assets/'+str(request.data['name_img'])  
+        idResponse.url_img='http://localhost:8000/assets/'+str(request.data['name_img'])  
         idResponse.format_img=str(request.data['name_img']).split(".")[1]         
         idResponse.edited=datetime.datetime.now()
         idResponse.save()

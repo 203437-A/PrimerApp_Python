@@ -18,5 +18,5 @@ class ImageSerializerNameImage(serializers.ModelSerializer):
         nameFileString= str(nameFile)
         formatExtension = nameFileString.split(".")[1]
         urlImage= 'http://localhost:8000/assets/'+ nameFileString
-        image = ImageModel.objects.create(name_img=nameFile, format_img=formatExtension, url_image=urlImage)
+        image = ImageModel.objects.create(name_img=nameFile, format_img=formatExtension, url_img=urlImage)
 
