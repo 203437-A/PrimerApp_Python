@@ -7,6 +7,11 @@ from rest_framework import permissions
 
 from register.serializers import RegisterTableSerializer
 
+
+from .serializers import RegisterSerializerNew
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
+
 #Create your views here.
 
 class RegisterUser(APIView):
@@ -18,3 +23,9 @@ class RegisterUser(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RegisterUserNew(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializerNew
+
