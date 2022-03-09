@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+from django.views.static import serve
+from django.conf import settings
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -41,6 +43,8 @@ urlpatterns = [
     re_path(r'^api/', include('register.urls')),
     re_path(r'^api/v1/image/', include('loadImage.urls')),
     re_path(r'^api/v1/primer_componente/', include('primerComponente.urls')), 
+    re_path(r'api/v1/user_profile/', include('profileC.urls')),
+    re_path(r'assets/(?P<path>.*)', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
 
 
