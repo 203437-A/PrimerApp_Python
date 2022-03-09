@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileModel
-        fields = ('__all__',)
+        fields = ('__all__')
 
     def create(self, nameFile, user):
         ProfileModel.objects.create(

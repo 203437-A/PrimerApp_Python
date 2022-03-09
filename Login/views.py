@@ -15,10 +15,13 @@ class LoginAuth(ObtainAuthToken):
         token,create=Token.objects.get_or_create(user=user)
         
         return Response({
-            'token':token.key,
+            'token': token.key,
             'user_id':user.pk,
-            'email':user.email
-        }) 
+            'username':user.username,
+            'email':user.email,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+        })
 
 class MyObtainTokenPairView(TokenObtainPairView):
    permission_classes = (AllowAny,)

@@ -70,3 +70,29 @@ class ImageViewDetail(APIView):
       return Response ('Succes', status=status.HTTP_200_OK)
     else:
       return Response ('Error', status=status.HTTP_400_BAD_REQUEST)
+
+  def delete(self, request, pk, format=None):
+    user_img = get_image(pk)
+    stringFile = str(user_img.name_img)
+    if user_img != 404:
+      try:
+        os.remove('assets/'+stringFile)
+      except:
+        return Response('Error', status=status.HTTP_400_BAD_REQUEST)
+      user_img.delete()
+      return Response('Succes', status=status.HTTP_200_OK)
+    else:
+      return Response('Error', status=status.HTTP_400_BAD_REQUEST)
+
+class UserViewDetail(APIView):
+  def put(self, request, pk, format=None):
+    data = request.data
+    user = get_user(pk)
+    user.username=data['username']
+    user.first_name=data['first_name']
+    user.last_name=data['last_name']
+    user.email=data['email']
+    user.save()
+    userR = {'username':user.username, 'first_name':user.first_name, 'last_name':user.last_name, 'email':user.email}
+    return Response(userR, status=status.HTTP_200_OK)
+
